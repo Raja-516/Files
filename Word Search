@@ -1,0 +1,23 @@
+class Solution:
+    def exist(self, s: List[List[str]], tar: str) -> bool:
+        def dfs(i,j,k,s1,hs):
+            if s1 == tar:
+                return True
+            hs.add((i,j))
+            for u,l in [[0,1],[0,-1],[1,0],[-1,0]]:
+                dx,dy=i+u,j+l
+                if 0<=dx<len(s) and 0<=dy<len(s[0]) and (dx,dy) not in hs and s[dx][dy] == tar[k]:
+                    
+                    z=dfs(dx,dy,k+1,s1+s[dx][dy],hs)
+                    if z:
+                        return True
+            hs.remove((i,j))
+            return False
+        for i in range(len(s)):
+            for j in range(len(s[0])):
+                if s[i][j] == tar[0]:
+                    print(s[i][j])
+                    n=dfs(i,j,1,tar[0],set())
+                    if n:
+                        return True
+        return False
